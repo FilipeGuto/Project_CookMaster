@@ -2,6 +2,7 @@ const connect = require('./connection');
 
 const modelCreateUser = async (name, email, password) => {
   const conn = await connect();
+
   const newUser = {
     name,
     email,
