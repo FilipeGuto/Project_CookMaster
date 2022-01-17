@@ -10,13 +10,21 @@ const servicesCreateUser = async (name, email, password) => {
   if (!name || !password || !emailValid.test(email)) {
     throw errorMessage(badRequest, 'Invalid entries. Try again.');
   }
-
   const emailExists = await modelFindByEmail(email);
   if (emailExists) throw errorMessage(conflict, 'Email already registered');
 
-  const newUser = await modelCreateUser(name, email, password);
+  const role = 'user';
 
-  return newUser;
+  const { id } = await modelCreateUser(name, email, password, role);
+
+  const user = {
+    _id: id,
+    name,
+    email,
+    role,
+  };
+
+  return { user };
 };
 
 module.exports = {
