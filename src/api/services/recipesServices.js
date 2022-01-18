@@ -1,10 +1,11 @@
 const {
   modelCreateRecipe,
   modelFindRecipes,
+  modelsRecipeById,
 } = require('../models/recipesModels');
 const errorMessage = require('../utils/errorMessage');
 const { recipesSchema } = require('../schema/schema');
-const { badRequest } = require('../utils/dictionary/statusCode');
+const { badRequest, notFound } = require('../utils/dictionary/statusCode');
 
 const servicesCreateRecipe = async (recipes) => {
   const { name, ingredients, preparation } = recipes;
@@ -26,7 +27,15 @@ const servicesFindRecipes = async () => {
   return recipes;
 };
 
+const servicesRecipeById = async (id) => {
+  const recipeId = await modelsRecipeById(id);
+  if (recipeId === null) throw errorMessage(notFound, 'recipe not found');
+
+  return recipeId;
+};
+
 module.exports = {
   servicesCreateRecipe,
   servicesFindRecipes,
+  servicesRecipeById,
 };

@@ -15,7 +15,16 @@ const modelFindRecipes = async () => {
   return query;
 };
 
+const modelsRecipeById = async (id) => {
+  if (!ObjectId.isValid(id)) return null;
+  const conn = await connect();
+  const recipeId = await conn.collection('recipes').findOne({ _id: ObjectId(id) });
+
+  return recipeId;
+};
+
 module.exports = {
   modelCreateRecipe,
   modelFindRecipes,
+  modelsRecipeById,
 };

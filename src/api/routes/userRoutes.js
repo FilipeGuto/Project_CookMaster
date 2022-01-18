@@ -6,6 +6,7 @@ const {
 const {
   controllerCreateRecipe,
   controllerListRecipe,
+  controllerRecipeById,
 } = require('../controllers/recipesControllers');
 const auth = require('../middlewares/auth');
 
@@ -16,5 +17,6 @@ routerUsers.post('/users', controllerCreateUser);
 routerUsers.post('/login', controllerLogin);
 routerUsers.post('/recipes', auth, controllerCreateRecipe);
 routerUsers.get('/recipes', controllerListRecipe);
+routerUsers.get('/recipes/:id', controllerRecipeById);
 
 module.exports = routerUsers;

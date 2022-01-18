@@ -1,6 +1,7 @@
 const {
   servicesCreateRecipe,
   servicesFindRecipes,
+  servicesRecipeById,
 } = require('../services/recipesServices');
 const { created, success } = require('../utils/dictionary/statusCode');
 
@@ -38,7 +39,20 @@ const controllerListRecipe = async (req, res, next) => {
   }
 };
 
+const controllerRecipeById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const recipeId = await servicesRecipeById(id);
+
+    return res.status(success).json(recipeId);
+  } catch (error) {
+    console.log(`GET RECIPE BY ID -> ${error.message}`);
+    return next(error);
+  }
+};
+
 module.exports = {
   controllerCreateRecipe,
   controllerListRecipe,
+  controllerRecipeById,
 };
