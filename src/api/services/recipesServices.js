@@ -1,9 +1,9 @@
-// const { ObjectId } = require('mongodb');
 const {
   modelCreateRecipe,
   modelFindRecipes,
   modelsRecipeById,
   modelsUpdateRecipe,
+  modelsDeleteRecipe,
 } = require('../models/recipesModels');
 const errorMessage = require('../utils/errorMessage');
 const { recipesSchema } = require('../schema/schema');
@@ -44,9 +44,14 @@ const servicesUpdateRecipe = async (id, recipe) => {
   return recipeById;
 };
 
+const servicesDeleteRecipe = async (id) => {
+  await modelsDeleteRecipe(id);
+};
+
 module.exports = {
   servicesCreateRecipe,
   servicesFindRecipes,
   servicesRecipeById,
   servicesUpdateRecipe,
+  servicesDeleteRecipe,
 };

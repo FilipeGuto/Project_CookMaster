@@ -3,6 +3,7 @@ const {
   servicesFindRecipes,
   servicesRecipeById,
   servicesUpdateRecipe,
+  servicesDeleteRecipe,
 } = require('../services/recipesServices');
 const { created, success } = require('../utils/dictionary/statusCode');
 
@@ -57,9 +58,21 @@ const controllerUpdateRecipe = async (req, res, next) => {
     const { id } = req.params;
     const recipeId = await servicesUpdateRecipe(id, req.body);
 
-    return res.status(success).json(recipeId);
+    return res.status(200).json(recipeId);
   } catch (error) {
     console.log(`UPDATE RECIPE BY ID -> ${error.message}`);
+    return next(error);
+  }
+};
+
+const controllerDeleteRecipe = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    await servicesDeleteRecipe(id);
+
+    return res.status(204).json();
+  } catch (error) {
+    console.log(`DELETE RECIPE BY ID -> ${error.message}`);
     return next(error);
   }
 };
@@ -69,4 +82,5 @@ module.exports = {
   controllerListRecipe,
   controllerRecipeById,
   controllerUpdateRecipe,
+  controllerDeleteRecipe,
 };

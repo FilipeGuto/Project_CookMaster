@@ -34,9 +34,15 @@ const modelsUpdateRecipe = async (id, recipe) => {
     );
 };
 
+const modelsDeleteRecipe = async (id) => {
+  const conn = await connect();
+  await conn.collection('recipes').deleteOne({ _id: ObjectId(id) });
+};
+
 module.exports = {
   modelCreateRecipe,
   modelFindRecipes,
   modelsRecipeById,
   modelsUpdateRecipe,
+  modelsDeleteRecipe,
 };
