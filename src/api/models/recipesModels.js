@@ -8,6 +8,14 @@ const modelCreateRecipe = async (recipe) => {
   return ObjectId(insertedId);
 };
 
+const modelFindRecipes = async () => {
+  const conn = await connect();
+  const query = await conn.collection('recipes').find().toArray();
+
+  return query;
+};
+
 module.exports = {
   modelCreateRecipe,
+  modelFindRecipes,
 };

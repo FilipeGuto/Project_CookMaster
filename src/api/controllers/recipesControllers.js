@@ -1,5 +1,8 @@
-const { servicesCreateRecipe } = require('../services/recipesServices');
-const { created } = require('../utils/dictionary/statusCode');
+const {
+  servicesCreateRecipe,
+  servicesFindRecipes,
+} = require('../services/recipesServices');
+const { created, success } = require('../utils/dictionary/statusCode');
 
 const controllerCreateRecipe = async (req, res, next) => {
   try {
@@ -24,6 +27,18 @@ const controllerCreateRecipe = async (req, res, next) => {
   }
 };
 
+const controllerListRecipe = async (req, res, next) => {
+  try {
+    const recipes = await servicesFindRecipes();
+
+    return res.status(success).json(recipes);
+  } catch (error) {
+    console.log(`GET ALL RECIPES -> ${error.message}`);
+    return next(error);
+  }
+};
+
 module.exports = {
   controllerCreateRecipe,
+  controllerListRecipe,
 };

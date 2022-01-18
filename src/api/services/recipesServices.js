@@ -1,5 +1,6 @@
 const {
   modelCreateRecipe,
+  modelFindRecipes,
 } = require('../models/recipesModels');
 const errorMessage = require('../utils/errorMessage');
 const { recipesSchema } = require('../schema/schema');
@@ -19,6 +20,13 @@ const servicesCreateRecipe = async (recipes) => {
   return { recipe };
 };
 
+const servicesFindRecipes = async () => {
+  const recipes = await modelFindRecipes();
+
+  return recipes;
+};
+
 module.exports = {
   servicesCreateRecipe,
+  servicesFindRecipes,
 };
