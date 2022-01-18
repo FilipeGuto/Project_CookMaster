@@ -2,6 +2,7 @@ const {
   servicesCreateRecipe,
   servicesFindRecipes,
   servicesRecipeById,
+  servicesUpdateRecipe,
 } = require('../services/recipesServices');
 const { created, success } = require('../utils/dictionary/statusCode');
 
@@ -51,8 +52,21 @@ const controllerRecipeById = async (req, res, next) => {
   }
 };
 
+const controllerUpdateRecipe = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const recipeId = await servicesUpdateRecipe(id, req.body);
+
+    return res.status(success).json(recipeId);
+  } catch (error) {
+    console.log(`UPDATE RECIPE BY ID -> ${error.message}`);
+    return next(error);
+  }
+};
+
 module.exports = {
   controllerCreateRecipe,
   controllerListRecipe,
   controllerRecipeById,
+  controllerUpdateRecipe,
 };
