@@ -42,7 +42,7 @@ const modelsUploadImg = async (id, image) => {
   const conn = await connect();
   await conn.collection('recipes').updateOne(
     { _id: ObjectId(id) },
-    { $set: { image: `localhost3000/src/uploads/${image}` } },
+    { $set: { image: `localhost:3000/src/uploads/${image}` } },
   );
 
   return true;
