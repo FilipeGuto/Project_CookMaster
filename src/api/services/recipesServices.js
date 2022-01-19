@@ -4,6 +4,7 @@ const {
   modelsRecipeById,
   modelsUpdateRecipe,
   modelsDeleteRecipe,
+  modelsUploadImg,
 } = require('../models/recipesModels');
 const errorMessage = require('../utils/errorMessage');
 const { recipesSchema } = require('../schema/schema');
@@ -48,10 +49,21 @@ const servicesDeleteRecipe = async (id) => {
   await modelsDeleteRecipe(id);
 };
 
+const servicesUploadImg = async (id, image) => {
+  await modelsUploadImg(id, image);
+  
+  const recipeById = await modelsRecipeById(id);
+
+  console.log(recipeById);
+
+  return recipeById;
+};
+
 module.exports = {
   servicesCreateRecipe,
   servicesFindRecipes,
   servicesRecipeById,
   servicesUpdateRecipe,
   servicesDeleteRecipe,
+  servicesUploadImg,
 };

@@ -25,18 +25,27 @@ const modelsRecipeById = async (id) => {
 
 const modelsUpdateRecipe = async (id, recipe) => {
   const conn = await connect();
-  const recipes = {
-    ...recipe,
-  };
 
-  await conn.collection('recipes').updateOne(
-    { _id: ObjectId(id) }, { $set: { ...recipes } },
-    );
+  const updateRecipe = await conn.collection('recipes').updateOne(
+    { _id: ObjectId(id) }, { $set: { ...recipe } },
+  );
+
+  return updateRecipe;
 };
 
 const modelsDeleteRecipe = async (id) => {
   const conn = await connect();
   await conn.collection('recipes').deleteOne({ _id: ObjectId(id) });
+};
+
+const modelsUploadImg = async (id, image) => {
+  const conn = await connect();
+  await conn.collection('recipes').updateOne(
+    { _id: ObjectId(id) },
+    { $set: { image: `localhost3000/src/uploads/${image}` } },
+  );
+
+  return true;
 };
 
 module.exports = {
@@ -45,4 +54,5 @@ module.exports = {
   modelsRecipeById,
   modelsUpdateRecipe,
   modelsDeleteRecipe,
+  modelsUploadImg,
 };
