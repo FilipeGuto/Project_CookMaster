@@ -3,6 +3,7 @@ const connect = require('./connection');
 
 const modelCreateUser = async (name, email, password, role) => {
   const conn = await connect();
+  console.log(conn);
   const { insertedId } = await conn.collection('users').insertOne({
     name, email, password, role,
   });
